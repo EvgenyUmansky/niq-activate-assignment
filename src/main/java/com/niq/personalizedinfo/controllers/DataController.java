@@ -29,10 +29,13 @@ public class DataController {
         try {
             dataService.insertOrUpdateProduct(request);
 
+            // TODO: AOP
             String response = "[addProductList] Product List has been added successfully, response code: %d".formatted(HttpStatus.SC_CREATED);
             log.info(response);
+
             return response;
         } catch (Exception e) {
+            // TODO: AOP, exception handler
             String response = "[addProductList] Failed to add Product List, response code: %d".formatted(HttpStatus.SC_INTERNAL_SERVER_ERROR);
             log.error(response, e);
             return response;
@@ -44,10 +47,13 @@ public class DataController {
         try {
             dataService.insertOrUpdateShopperPersonalizedProduct(request);
 
+            // TODO: AOP
             String response = "[addShopperPersonalizedProductList] Shopper Personalized Product List has been added successfully, response code: %d".formatted(HttpStatus.SC_CREATED);
             log.info(response);
+
             return response;
         } catch (Exception e) {
+            // TODO: AOP, exception handler
             String response = "[addShopperPersonalizedProductList] Failed to add Shopper Personalized Product List, response code: %d".formatted(HttpStatus.SC_INTERNAL_SERVER_ERROR);
             log.error(response, e);
             return response;

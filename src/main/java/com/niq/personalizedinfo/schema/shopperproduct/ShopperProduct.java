@@ -1,14 +1,11 @@
 package com.niq.personalizedinfo.schema.shopperproduct;
 
 import com.niq.personalizedinfo.schema.product.Product;
-import com.niq.personalizedinfo.schema.shopper.Shopper;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.List;
 
 @Getter
 @Setter
@@ -30,9 +27,10 @@ public class ShopperProduct {
     Double relevantScore;
 
     @ManyToOne
-    @JoinColumn(name="product_id", updatable = false, insertable = false)
-    Product product;
+    @JoinColumn(name = "product_id", updatable = false, insertable = false)
+    Product product; // get joined product data as nested object
 
+    // constructor with specific args
     public ShopperProduct(String shopperId, String productId, Double relevantScore) {
         this.shopperId = shopperId;
         this.productId = productId;

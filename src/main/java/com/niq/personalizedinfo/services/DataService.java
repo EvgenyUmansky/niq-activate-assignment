@@ -6,7 +6,6 @@ import com.niq.personalizedinfo.schema.product.ProductRepository;
 import com.niq.personalizedinfo.schema.shopper.Shopper;
 import com.niq.personalizedinfo.schema.shopper.ShopperRepository;
 import com.niq.personalizedinfo.schema.shopperproduct.ShopperProduct;
-import com.niq.personalizedinfo.schema.shopperproduct.ShopperProductId;
 import com.niq.personalizedinfo.schema.shopperproduct.ShopperProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -29,6 +28,7 @@ public class DataService {
     }
 
     public void insertOrUpdateProduct(List<Product> request) {
+        // just save all products from request as batches
         productRepository.saveAll(request);
     }
 
@@ -36,6 +36,7 @@ public class DataService {
     public void insertOrUpdateShopperPersonalizedProduct(List<ShopperPersonalizedProductRequest> request) {
         List<Shopper> shopperList = new ArrayList<>();
         List<ShopperProduct> shopperProductList = new ArrayList<>();
+
         request.forEach(shopperPersonalizedProductPojo -> {
             // insert or update are expensive actions
             // select is cheaper action
@@ -50,7 +51,7 @@ public class DataService {
             // iterate over shelves
             // add the shelves to list
             shopperPersonalizedProductPojo.getShelfList().forEach(shelf -> {
-                if(productRepository.existsByProductIdContainsIgnoreCaseAllIgnoreCase(shelf.getProductId())) { // there are product_ids that do not exist in product json
+                if (productRepository.existsByProductIdContainsIgnoreCaseAllIgnoreCase(shelf.getProductId())) { // there are product_ids that do not exist in product json
                     ShopperProduct shopperProduct = new ShopperProduct(shopperPersonalizedProductPojo.getShopperId(), shelf.getProductId(), shelf.getRelevancyScore());
                     shopperProductList.add(shopperProduct);
                 }
