@@ -3,6 +3,8 @@ package com.niq.personalizedinfo.controllers;
 import com.niq.personalizedinfo.requests.ShopperPersonalizedProductRequest;
 import com.niq.personalizedinfo.schema.product.Product;
 import com.niq.personalizedinfo.services.DataService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.log4j.Log4j2;
 import org.apache.http.HttpStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import java.util.List;
 @Log4j2
 @RestController
 @RequestMapping(value = "/data")
+@Tag(name = "Data", description = "Data management APIs")
 public class DataController {
     DataService dataService;
 
@@ -24,6 +27,16 @@ public class DataController {
         this.dataService = dataService;
     }
 
+    /**
+     * Insert or Update products
+     *
+     * @param request - parsed json
+     * @return
+     */
+    @Operation(
+            summary = "Add products to database",
+            description = "Insert or Update products",
+            tags = {"products", "post"})
     @PostMapping(value = "/add-product-list")
     public String addProductList(@RequestBody List<Product> request) {
         try {
@@ -42,6 +55,16 @@ public class DataController {
         }
     }
 
+    /**
+     * Insert or Update shoppers, their products and relevant score
+     *
+     * @param request - parsed json
+     * @return
+     */
+    @Operation(
+            summary = "Add shoppers and their products to database",
+            description = "Insert or Update shoppers, their products and relevant score",
+            tags = {"products", "shoppers", "post"})
     @PostMapping(value = "/add-shopper-personalized-product-list")
     public String addShopperPersonalizedProductList(@RequestBody List<ShopperPersonalizedProductRequest> request) {
         try {
